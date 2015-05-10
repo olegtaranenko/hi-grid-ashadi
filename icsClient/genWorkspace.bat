@@ -25,7 +25,7 @@ if exist .sencha/NUL (
 	rmdir /S /Q .sencha
 )
 
-sencha -sdk ../ExtJS/src generate workspace .
+sencha -sdk ../../../ExtJS/src generate workspace .
 
 if not exist ext\NUL echo WARNING: directory ext is missing
 

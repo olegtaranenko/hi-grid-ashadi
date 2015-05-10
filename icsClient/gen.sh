@@ -45,17 +45,13 @@ echo "---> GEN_MODE=$GEN_MODE"
 #source setupEnv.sh
 
 #build theme
-if [ "$GEN_MODE" == "theme" ] || [ "$GEN_MODE" == "all" ]; then
+if [ "$GEN_MODE" == "theme" ]; then
     echo "---> build themes..."
-    pushd packages/ics-base-theme
+    pushd themes/ics-base-theme
 #    sencha ant clean
     sencha package build
     popd
 
-#    pushd packages/${VENDOR_DIR}
-#    sencha ant clean
-#    sencha package build
-#    popd
 fi
 
 #build app

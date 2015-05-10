@@ -19,7 +19,7 @@ fi
 
 
 echo "Generate workspace..."
-sencha -sdk ../ExtJS/src generate workspace --path .
+sencha -sdk ../../../ExtJS/src generate workspace --path .
 
 echo "Restore packages (cmd bug)..."
 rm -rf packages
