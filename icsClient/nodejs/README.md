@@ -12,6 +12,11 @@ install modules
     npm config set proxy http://proxy:3128
     npm config set https-proxy http://proxy:3128
 
+To remove any proxy from npm
+
+    npm config rm proxy
+    npm config rm https-proxy
+
 To install all modules you have to be connected to the internet and proper configured proxy settings.
 
     cd nodejs
