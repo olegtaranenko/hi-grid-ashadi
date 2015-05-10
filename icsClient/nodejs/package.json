@@ -1,0 +1,28 @@
+{
+  "name": "icssimmon",
+  "version": "0.1.0",
+  "description": "Emulation for development new Monitor List concept (eventual to be used with CustomRequest)",
+  "homepage": "http://www.matrix-vision.de",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Oleg Taranenko <oleg.taranenko@matrix-vision.de>",
+  "main": "./api.js",
+  "engines": {
+    "node": "~0.12"
+  },
+  "dependencies": {
+    "body-parser": ">=1.12",
+    "colors": ">=0.5",
+    "connect": ">=3.3",
+    "cors": "~2.5",
+    "debug": ">=0.7",
+    "express": ">=3.1",
+    "media-typer": "~0.3",
+    "raw-body": "~1.3",
+    "request": ">=2.14",
+    "serve-favicon": ">=2.2",
+    "underscore": ">=1.4"
+  }
+}
