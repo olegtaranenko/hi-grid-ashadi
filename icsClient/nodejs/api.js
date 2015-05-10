@@ -105,10 +105,10 @@ function processResults(req, res, next) {
 
     function nextDummy(index, ts) {
         var dummyTpl = {
-            inspectionIndex: {hi:0, lo: 1},
-            inspectionTime: {hi: 0, lo: ts},
-            iterationDuration: {hi:0, lo: 150000},
-            inspectionDuration: {hi:0, lo: 220000} ,
+            inspectionIndex: 1,
+            inspectionTime: 2,
+            iterationDuration: 3,
+            inspectionDuration: 4,
             isOk: false
         };
 

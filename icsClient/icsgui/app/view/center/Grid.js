@@ -4,11 +4,17 @@ Ext.define('ICSGui.view.center.Grid',{
     xtype:'maingrid',
     initComponent:function(){
         var me = this;
-
         Ext.apply(me,{
-            store:[],
-            columns:[{text:'ID',width:40,dataIndex:'id'}]
+            store:Ext.create('ICSGui.store.GridStore'),
+            columns:[
+                {dataIndex:'inspectionIndex',text:'inspectionIndex',flex:1},
+                {dataIndex:'inspectionTime',text:'inspectionTime',flex:1},
+                {dataIndex:'iterationDuration',text:'iterationDuration',flex:1},
+                {dataIndex:'inspectionDuration',text:'inspectionDuration',flex:1}
+            ]
         });
+
+        me.store.loadPage(1);
         me.callParent(arguments);
     }
 });

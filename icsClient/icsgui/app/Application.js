@@ -9,7 +9,7 @@ Ext.define('ICSGui.Application', {
     name: 'ICSGui',
 
     stores: [
-        // TODO: add global / shared stores here
+        'GridStore'
     ],
     
     launch: function () {
