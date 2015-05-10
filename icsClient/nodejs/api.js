@@ -77,42 +77,56 @@ function startsWith(s, start, ignoreCase) {
 
 
 function processResults(req, res, next) {
-    var requestUrl = req.url,
-        parsedUrl = url.parse(requestUrl),
-        query = parsedUrl.query,
+    var requestUrl, parsedUrl, query, params, page, start, limit, ts, inspectionList;
+    requestUrl = req.url;
+    parsedUrl = url.parse(requestUrl);
+    query = parsedUrl.query;
+    params = querystring.parse(query);
+    page = params.page;
+    start = params.start;
+    limit = params.limit;
+    ts = (new Date()).getTime() / 1000;
 
-        params = querystring.parse(query),
-        page = params.page,
-        start = params.start,
-        limit = params.limit,
-        ts = (new Date()).getTime() / 1000,
-        inspectionList = [nextDummy(1, ts)];
+    var inspectionList = nextDummy(100000, ts);
 
     res.writeHead(200, {
         "Content-Type": "application/javascript"
     });
 
+    start = parseInt(start);
+    var resultData = [];
     for (var i = 0; i < limit; i++) {
         var inspectionIndex = (page - 1) * limit + i + start;
+        if(inspectionIndex < inspectionList.length){
+            resultData.push(inspectionList[inspectionIndex]);
+        }
     }
 
     res.write(JSON.stringify({
-        data: inspectionList
+        data: resultData,
+        total: inspectionList.length
     }));
 
     res.end();
 
 
     function nextDummy(index, ts) {
-        var dummyTpl = {
-            inspectionIndex: 1,
-            inspectionTime: 2,
-            iterationDuration: 3,
-            inspectionDuration: 4,
-            isOk: false
-        };
 
-        return dummyTpl;
+        var data = [];
+
+        for(var i=0; i < index ; i++){
+            var dummyTpl = {
+                inspectionIndex: i,
+                inspectionTime: i,
+                iterationDuration: i,
+                inspectionDuration: i,
+                isOk: false
+            };
+            data.push(dummyTpl);
+        }
+
+
+        return data;
     }
 }
 

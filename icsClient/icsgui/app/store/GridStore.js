@@ -8,7 +8,8 @@ Ext.define('ICSGui.store.GridStore',{
         type:'ajax',
         reader:{
             type:'json',
-            rootProperty:'data'
+            rootProperty:'data',
+            totalProperty:'total'
         }
     }
 });
