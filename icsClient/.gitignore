@@ -1,0 +1,16 @@
+build
+/ext
+/font-awesome-4.0.3
+/icsgui/resources/toolswithshadow.css
+/icsgui/docs
+icsgui/build
+bootstrap.json
+bootstrap.js
+bootstrap.css
+example.css
+/src
+/packages
+*.log
+projectFilesBackup
+.idea/workspace.xml
+.idea/vcs.xml

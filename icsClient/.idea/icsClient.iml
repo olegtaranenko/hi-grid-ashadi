@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="CompassSettings">
+    <option name="compassExecutableFilePath" value="/usr/bin/compass" />
+    <option name="compassSupportEnabled" value="true" />
+    <option name="importPaths">
+      <list>
+        <option value="/Library/Ruby/Gems/2.0.0/gems/compass-core-1.1.0.alpha.3/stylesheets" />
+      </list>
+    </option>
+  </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-aria" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-charts" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-locale" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-theme-aria" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-theme-classic" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-theme-classic-sandbox" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-theme-crisp" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-theme-crisp-touch" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-theme-gray" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-theme-neptune-touch" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-touch-sizing" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/ext-ux" />
+      <excludeFolder url="file://$MODULE_DIR$/themes/ics-base-theme/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/sencha-amf" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/sencha-charts" />
+      <excludeFolder url="file://$MODULE_DIR$/ext/packages/sencha-soap" />
+      <excludeFolder url="file://$MODULE_DIR$/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/src" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="compass-library" level="project" />
+  </component>
+</module>
