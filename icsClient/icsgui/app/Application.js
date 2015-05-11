@@ -12,7 +12,16 @@ Ext.define('ICSGui.Application', {
         'GridStore'
     ],
     
-    launch: function () {
+    launch: function (config) {
+        var me = this;
         // TODO - Launch the application
+        me.socket = io.connect('localhost', {
+            port: 5555,
+//            reconnect: config.reconnect,
+//            'reconnection delay': config['reconnection delay'],
+//            'max reconnection attempts': config['max reconnection attemps'],
+            'transports': ['websocket','flashsocket','htmlfile','xhr-multipart', 'xhr-polling']
+        });
+
     }
 });
