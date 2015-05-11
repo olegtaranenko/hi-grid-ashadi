@@ -56,6 +56,15 @@ var localPort = process.env.PORT || 5555;
 server.listen(localPort);
 console.warn('server started at port', localPort);
 
+var mylogger = require('./lib/mylogger'),
+    Log = new mylogger();
+
+var io = require('socket.io').listen(server, {
+    logger: new mylogger,
+    'Log level': 3
+});
+
+
 function logger(req, res, next) {
     console.log('%s %s', req.method, req.url);
     next();
