@@ -56,6 +56,15 @@ var localPort = process.env.PORT || 5555;
 server.listen(localPort);
 console.warn('server started at port', localPort);
 
+var mylogger = require('./lib/mylogger'),
+    Log = new mylogger();
+
+var io = require('socket.io').listen(server, {
+    logger: new mylogger,
+    'Log level': 3
+});
+
+
 function logger(req, res, next) {
     console.log('%s %s', req.method, req.url);
     next();
@@ -77,42 +86,56 @@ function startsWith(s, start, ignoreCase) {
 
 
 function processResults(req, res, next) {
-    var requestUrl = req.url,
-        parsedUrl = url.parse(requestUrl),
-        query = parsedUrl.query,
+    var requestUrl, parsedUrl, query, params, page, start, limit, ts, inspectionList;
+    requestUrl = req.url;
+    parsedUrl = url.parse(requestUrl);
+    query = parsedUrl.query;
+    params = querystring.parse(query);
+    page = params.page;
+    start = params.start;
+    limit = params.limit;
+    ts = (new Date()).getTime() / 1000;
 
-        params = querystring.parse(query),
-        page = params.page,
-        start = params.start,
-        limit = params.limit,
-        ts = (new Date()).getTime() / 1000,
-        inspectionList = [nextDummy(1, ts)];
+    var inspectionList = nextDummy(100000, ts);
 
     res.writeHead(200, {
         "Content-Type": "application/javascript"
     });
 
+    start = parseInt(start);
+    var resultData = [];
     for (var i = 0; i < limit; i++) {
         var inspectionIndex = (page - 1) * limit + i + start;
+        if(inspectionIndex < inspectionList.length){
+            resultData.push(inspectionList[inspectionIndex]);
+        }
     }
 
     res.write(JSON.stringify({
-        data: inspectionList
+        data: resultData,
+        total: inspectionList.length
     }));
 
     res.end();
 
 
     function nextDummy(index, ts) {
-        var dummyTpl = {
-            inspectionIndex: {hi:0, lo: 1},
-            inspectionTime: {hi: 0, lo: ts},
-            iterationDuration: {hi:0, lo: 150000},
-            inspectionDuration: {hi:0, lo: 220000} ,
-            isOk: false
-        };
 
-        return dummyTpl;
+        var data = [];
+
+        for(var i=0; i < index ; i++){
+            var dummyTpl = {
+                inspectionIndex: i,
+                inspectionTime: i,
+                iterationDuration: i,
+                inspectionDuration: i,
+                isOk: false
+            };
+            data.push(dummyTpl);
+        }
+
+
+        return data;
     }
 }
 

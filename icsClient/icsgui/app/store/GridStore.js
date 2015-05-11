@@ -1,0 +1,15 @@
+Ext.define('ICSGui.store.GridStore',{
+    extend:'Ext.data.Store',
+    fields:['inspectionIndex','inspectionTime','iterationDuration','inspectionDuration'],
+    pageSize:20,
+    autoLoad:false,
+    proxy:{
+        url:'http://localhost:5555/results',
+        type:'ajax',
+        reader:{
+            type:'json',
+            rootProperty:'data',
+            totalProperty:'total'
+        }
+    }
+});
