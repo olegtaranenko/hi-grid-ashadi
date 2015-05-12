@@ -16,8 +16,8 @@ Ext.define('ICSGui.Application', {
     launch: function (config) {
         var me = this;
         // TODO - Launch the application
-        me.socket = io.connect('localhost', {
-            port: 5555,
+        me.socket = io.connect('localhost:5555', {
+//            port: 5555,
 //            reconnect: config.reconnect,
            'reconnection delay': 1000, //config['reconnection delay'],
 //            'max reconnection attempts': config['max reconnection attemps'],
