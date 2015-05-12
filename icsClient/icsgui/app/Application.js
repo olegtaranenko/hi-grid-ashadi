@@ -5,11 +5,12 @@
  */
 Ext.define('ICSGui.Application', {
     extend: 'Ext.app.Application',
-    
     name: 'ICSGui',
-
+    requires:[
+      'Ext.layout.container.Border'
+    ],
     stores: [
-        'GridStore'
+
     ],
     
     launch: function () {
