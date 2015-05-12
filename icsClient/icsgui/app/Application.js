@@ -19,7 +19,7 @@ Ext.define('ICSGui.Application', {
         me.socket = io.connect('localhost', {
             port: 5555,
 //            reconnect: config.reconnect,
-//            'reconnection delay': config['reconnection delay'],
+           'reconnection delay': 1000, //config['reconnection delay'],
 //            'max reconnection attempts': config['max reconnection attemps'],
             'transports': ['websocket','flashsocket','htmlfile','xhr-multipart', 'xhr-polling']
         });
