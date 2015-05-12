@@ -8,6 +8,7 @@
 Ext.define('ICSGui.view.main.Main', {
     extend: 'Ext.container.Container',
     requires: [
+        'Ext.layout.container.Border',
         'ICSGui.global.Constants',
         'ICSGui.view.main.MainController',
         'ICSGui.view.main.MainModel',
