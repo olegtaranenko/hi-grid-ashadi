@@ -104,6 +104,10 @@
             "path": "${framework.dir}/build/ext-debug.js"
         },
         {
+            "path": "lib/socket.io.js",
+            "bundle": false
+        },
+        {
             "path": "app.js",
             "bundle": true
         }
