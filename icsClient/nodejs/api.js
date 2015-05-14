@@ -64,6 +64,15 @@ var io = require('socket.io').listen(server, {
     'Log level': 3
 });
 
+io.on('connection', function (socket) {
+    console.log('connected !');
+    socket.emit('news', { hello: 'world' });
+
+    socket.on('my other event', function (data) {
+        console.log(data);
+    });
+});
+
 
 function logger(req, res, next) {
     console.log('%s %s', req.method, req.url);

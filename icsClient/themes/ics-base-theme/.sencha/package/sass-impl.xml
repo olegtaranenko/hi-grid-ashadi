@@ -151,7 +151,7 @@
     </target>
 
     <target name="-compile-sass"
-            depends="-compile-sass-rtl-theme,-compile-sass-ltr-theme,-compile-sass-rtl,-compile-sass-ltr">
+            depends="-compile-sass-ltr-theme,-compile-sass-ltr">
         <echo file="${package.example.compass.config}">
             require '${build.all.ruby}'
             cache_path = '${compass.cache.dir}'
@@ -237,7 +237,7 @@
     </target>
 
     <target name="-before-sass"/>
-    <target name="-sass" depends="-compile-css"/>
+    <target name="-sass" depends="-compass-compile"/>
     <target name="-after-sass"/>
 
 </project>

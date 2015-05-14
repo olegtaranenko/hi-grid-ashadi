@@ -45,20 +45,20 @@ echo "---> GEN_MODE=$GEN_MODE"
 #source setupEnv.sh
 
 #build theme
-if [ "$GEN_MODE" == "theme" ]; then
-    echo "---> build themes..."
-    pushd themes/ics-base-theme
+#if [ "$GEN_MODE" == "theme" ] || [ "$GEN_MODE" == "all" ]; then
+#    echo "---> build themes..."
+#    pushd themes/ics-base-theme
 #    sencha ant clean
-    sencha package build
-    popd
-
-fi
+#    sencha package build
+#    popd
+#
+#fi
 
 #build app
 if [ "$GEN_MODE" == "app" ] || [ "$GEN_MODE" == "all" ]; then
     echo "---> build app..."
     #which sencha
     pushd icsgui
-    sencha ant -Dvendor=$VENDOR $ICS_BUILD build
+    sencha ant -Dvendor=$VENDOR testing build
     popd
 fi

@@ -10,7 +10,8 @@
      * This is the folder for build outputs in the workspace.
      */
     "build": {
-        "dir": "${workspace.dir}/build/${vendor.build.dir}"
+        "dir": "${workspace.dir}/build"
+//        "dir": "${workspace.dir}/build/${vendor.build.dir}"
     },
 
     /**

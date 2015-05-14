@@ -39,8 +39,9 @@
             <target name="-after-build"/>
     -->
 
+<!--
     <target name="-before-init">
-        <!--<property name="vendor.build.dir" value=""/>-->
+        &lt;!&ndash;<property name="vendor.build.dir" value=""/>&ndash;&gt;
         <condition property="vendor.build.dir" value="mv" else="balluff">
             <equals arg1="${vendor}" arg2="mv" casesensitive="false" trim="true"/>
         </condition>
@@ -48,5 +49,6 @@
             <equals arg1="${vendor}" arg2="mv" casesensitive="false" trim="true"/>
         </condition>
     </target>
+-->
 
 </project>

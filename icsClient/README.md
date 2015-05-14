@@ -9,7 +9,7 @@ Prerequisites
  * You have to be able launch java runtime for ant scripts execution. (Sencha Cmd)
  * If you use windows, last version of msysgit should be installed, can be downloaded from http://git-scm.com/download/win. TortoiseGit, IDE plugins, etc not enough
  * Project IDE is WebStorm. 30-days trial version can be downloaded from https://www.jetbrains.com/webstorm/whatsnew/
- * local http-server (apache, ...) should be installed. You must be able to establish symbolic linking between project's folder and server's htdocs. (FOLLOWSYMLINK etc)
+ * local http-server to serve 'static' sencha application (apache, nodejs, ...) should be installed. You must be able to establish symbolic linking between project's folder and server's htdocs. (FOLLOWSYMLINK etc)
  * actual version of node.js http://www.nodejs.org
 
 

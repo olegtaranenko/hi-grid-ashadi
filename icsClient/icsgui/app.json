@@ -29,7 +29,8 @@
      */
 
 //    "theme": "ics-base-theme",
-    "theme": "ics-mv-theme",
+//    "theme": "ics-mv-theme",
+    "theme": "ext-theme-neptune",
     
     /**
      * The list of required packages (with optional versions; default is "latest").

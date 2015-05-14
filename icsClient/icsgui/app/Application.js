@@ -12,11 +12,14 @@ Ext.define('ICSGui.Application', {
     stores: [
 
     ],
+
+    config: {
+        socket: null
+    },
     
     launch: function (config) {
         var me = this;
-        // TODO - Launch the application
-        me.socket = io.connect('localhost:5555', {
+        var socket = io('localhost:5555', {
 //            port: 5555,
 //            reconnect: config.reconnect,
            'reconnection delay': 1000, //config['reconnection delay'],
@@ -24,5 +27,15 @@ Ext.define('ICSGui.Application', {
             'transports': ['websocket','flashsocket','htmlfile','xhr-multipart', 'xhr-polling']
         });
 
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', {my: 'data'});
+        });
+
+        if (socket) {
+            me.setSocket(socket);
+        } else {
+            console.warn('something wrong')
+        }
     }
 });
