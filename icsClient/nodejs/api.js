@@ -52,6 +52,14 @@ app.use('/results', processResults);
 
 var localPort = process.env.PORT || 5555;
 
+// --- io Variables
+var ioInspectionTimer = null;
+var ioConfig = {
+  fps: 20,
+  buffer_size: 10000
+};
+// --- END io Variables
+
 // run node web-server
 server.listen(localPort);
 console.warn('server started at port', localPort);
@@ -65,14 +73,82 @@ var io = require('socket.io').listen(server, {
 });
 
 io.on('connection', function (socket) {
-    console.log('connected !');
+    console.log('[SOCKET EVENT] connected !');
     socket.emit('news', { hello: 'world' });
 
-    socket.on('my other event', function (data) {
-        console.log(data);
+    socket.on('configuration', function(data) {
+        console.log('[SOCKET EVENT] configuration : ', data);
+        ioSetConfiguration(data);
+    });
+
+    socket.on('start', function (data) {
+        console.log('[SOCKET EVENT] start : ', data);
+        ioStartInspection(data);
+    });
+
+    socket.on('stop', function (data) {
+        console.log('[SOCKET EVENT] stop : ', data);
+        ioStopInspection(data);
+    });
+
+    socket.on('disconnect', function () {
+        console.log('[SOCKET EVENT] disconnected!!! ');
+        ioStopInspection();
     });
 });
 
+// ----------------------------------------------------------
+// --------  START SOCKET.io FUNCTIONS
+
+function ioSetConfiguration (config) {
+    if (!config) {
+        return;
+    }
+    if (config.fps) {
+        ioConfig.fps = config.fps;
+    }
+    if (config.buffer_size) {
+        ioConfig.buffer_size = config.buffer_size;
+    }
+}
+
+function ioStartInspection (socket, config) {
+    ioSetConfiguration(config);
+    var interval = parseInt(1000 / ioConfig.fps);
+    ioInspectionTimer = setInterval(function () {
+        var resultData = ioGetDummy(Math.round(Math.random()*7));
+        socket.emit('inspection', {
+          data: resultData,
+          count: resultData.length
+        });
+
+    }, interval);
+}
+
+function ioStopInspection () {
+    if (ioInspectionTimer) {
+        clearInterval(ioInspectionTimer);
+        ioInspectionTimer = null;
+    }
+}
+
+function ioGetDummy(index) {
+    var data = [];
+
+    for(var i=0; i < index ; i++){
+        var dummyTpl = {
+            inspectionIndex: i,
+            inspectionTime: i,
+            iterationDuration: i,
+            inspectionDuration: i,
+            isOk: false
+        };
+        data.push(dummyTpl);
+    }
+    return data;
+}
+// --------  END SOCKET.io FUNCTIONS
+// ----------------------------------------------------------
 
 function logger(req, res, next) {
     console.log('%s %s', req.method, req.url);
