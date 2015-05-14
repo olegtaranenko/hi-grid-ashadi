@@ -66,9 +66,9 @@ var io = require('socket.io').listen(server, {
 
 io.on('connection', function (socket) {
     console.log('connected !');
-    socket.emit('news', { hello: 'world' });
+    socket.emit('requireToConfig', { myLastState: {} });
 
-    socket.on('my other event', function (data) {
+    socket.on('config', function (data) {
         console.log(data);
     });
 });
