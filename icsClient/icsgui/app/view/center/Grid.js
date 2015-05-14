@@ -1,4 +1,3 @@
-
 Ext.define('ICSGui.view.center.Grid',{
    extend:'Ext.grid.Panel',
     xtype:'maingrid',
