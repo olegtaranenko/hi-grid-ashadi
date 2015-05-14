@@ -104,9 +104,18 @@ Ext.define('ICSGui.view.main.Main', {
 
                     ],
                     bbar:[
-                        {text:'Run'},
-                        {text:'Pause'},
-                        {text:'Refresh'}
+                        {
+                            text:'Run',
+                            handler: 'onServerRun'
+                        },
+                        {
+                            text:'Pause',
+                            handler: 'onServerStop'
+                        },
+                        {
+                            text:'Reset',
+                            handler: 'onServerReset'
+                        }
                     ]
                 }
             ]

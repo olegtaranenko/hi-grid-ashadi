@@ -2,7 +2,7 @@ Ext.define('ICSGui.store.GridStore',{
     extend:'Ext.data.BufferedStore',
     fields:['inspectionIndex','inspectionTime','iterationDuration','inspectionDuration'],
     remoteGroup: true,
-    leadingBufferZone: 300,
+//    leadingBufferZone: 300,
     pageSize: 100,
     autoLoad:false,
     proxy:{

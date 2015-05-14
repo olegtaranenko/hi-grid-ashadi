@@ -55,8 +55,9 @@ var localPort = process.env.PORT || 5555;
 // --- io Variables
 var ioInspectionTimer = null;
 var ioConfig = {
-  fps: 20,
-  buffer_size: 10000
+    fps: 20,
+    buffer_size: 10000,
+    inspectionIndex: 0
 };
 // --- END io Variables
 
@@ -74,7 +75,6 @@ var io = require('socket.io').listen(server, {
 
 io.on('connection', function (socket) {
     console.log('[SOCKET EVENT] connected !');
-    socket.emit('news', { hello: 'world' });
 
     socket.on('configuration', function(data) {
         console.log('[SOCKET EVENT] configuration : ', data);
@@ -83,7 +83,7 @@ io.on('connection', function (socket) {
 
     socket.on('start', function (data) {
         console.log('[SOCKET EVENT] start : ', data);
-        ioStartInspection(data);
+        ioStartInspection(socket, data);
     });
 
     socket.on('stop', function (data) {
@@ -104,6 +104,7 @@ function ioSetConfiguration (config) {
     if (!config) {
         return;
     }
+    _.merge
     if (config.fps) {
         ioConfig.fps = config.fps;
     }
@@ -112,25 +113,33 @@ function ioSetConfiguration (config) {
     }
 }
 
+
 function ioStartInspection (socket, config) {
     ioSetConfiguration(config);
     var interval = parseInt(1000 / ioConfig.fps);
+    if (ioInspectionTimer) {
+        ioStopInspection();
+    }
+
+    console.log('live data started!');
     ioInspectionTimer = setInterval(function () {
-        var resultData = ioGetDummy(Math.round(Math.random()*7));
         socket.emit('inspection', {
-          data: resultData,
-          count: resultData.length
+            inspectionIndex: ioConfig.inspectionIndex++,
+            inspectionTimestamp: (new Date()).getTime()
         });
 
     }, interval);
 }
 
+
 function ioStopInspection () {
     if (ioInspectionTimer) {
+        console.log('live data stopped!');
         clearInterval(ioInspectionTimer);
         ioInspectionTimer = null;
     }
 }
+
 
 function ioGetDummy(index) {
     var data = [];
@@ -149,6 +158,7 @@ function ioGetDummy(index) {
 }
 // --------  END SOCKET.io FUNCTIONS
 // ----------------------------------------------------------
+
 
 function logger(req, res, next) {
     console.log('%s %s', req.method, req.url);
@@ -218,8 +228,6 @@ function processResults(req, res, next) {
             };
             data.push(dummyTpl);
         }
-
-
         return data;
     }
 }

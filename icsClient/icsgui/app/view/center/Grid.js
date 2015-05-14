@@ -24,13 +24,13 @@ Ext.define('ICSGui.view.center.Grid',{
         var store = Ext.create('Ext.data.BufferedStore',{
             fields:['inspectionIndex','inspectionTime'],
             remoteGroup: true,
-            leadingBufferZone: 300,
+//            leadingBufferZone: 300,
             pageSize: 100,
             autoLoad:false,
-            sorters:{
+            sorters: [{
                 property:'inspectionIndex',
                 direction:'DESC'
-            },
+            }],
             proxy:{
                 url:'http://localhost:5555/results',
                 type:'ajax',

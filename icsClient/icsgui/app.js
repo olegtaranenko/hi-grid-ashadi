@@ -8,7 +8,11 @@ Ext.application({
 
     extend: 'ICSGui.Application',
     
-    autoCreateViewport: 'ICSGui.view.main.Main'
+    autoCreateViewport: 'ICSGui.view.main.Main',
+
+    controllers: [
+    	'SocketController'
+    ]
 	
     //-------------------------------------------------------------------------
     // Most customizations should be made to ICSGui.Application. If you need to
