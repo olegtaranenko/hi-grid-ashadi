@@ -52,32 +52,51 @@ Ext.define('ICSGui.view.main.Main', {
                     items:[
                         {
                             xtype:'combo',
-                            store:[
-                                ['High','High']
-                            ],
+                            name:'name',
+                            store:'ConfigStore',
+                            valueField:'name',
+                            displayField:'name',
+                            stateful:true,
+                            stateId:'cofig_name',
                             labelAlign:'top',
-                            fieldLabel:'Saved Configuration'
+                            fieldLabel:'Saved Configuration',
+                            forceSelection:true,
+                            listeners:{
+                                select:'onChangeConfig'
+                            }
                         },{
                             xtype:'numberfield',
                             name:'fps',
+                            reference:'input_fps',
+                            stateful:true,
+                            stateId:'input_fps',
                             hideTrigger:true,
                             fieldLabel:'FPS',
                             labelWidth:140
                         },{
                             xtype:'numberfield',
                             name:'buffer',
+                            reference:'input_buffer',
+                            stateful:true,
+                            stateId:'input_buffer',
                             hideTrigger:true,
                             fieldLabel:'Buffer Size',
                             labelWidth:140
                         },{
                             xtype:'numberfield',
                             name:'result',
+                            reference:'input_result',
+                            stateful:true,
+                            stateId:'input_result',
                             hideTrigger:true,
                             fieldLabel:'Current result',
                             labelWidth:140
                         },{
                             xtype:'numberfield',
                             name:'refreshint',
+                            reference:'input_refreshint',
+                            stateful:true,
+                            stateId:'input_resultint',
                             hideTrigger:true,
                             fieldLabel:'Refresh Interval',
                             labelWidth:140

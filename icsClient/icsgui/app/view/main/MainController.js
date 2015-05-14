@@ -22,5 +22,13 @@ Ext.define('ICSGui.view.main.MainController', {
         if (choice === 'yes') {
             //
         }
+    },
+
+    onChangeConfig: function(combo, record){
+        var data = record.data;
+        this.lookupReference('input_fps').setValue(data.fps);
+        this.lookupReference('input_buffer').setValue(data.buffer);
+        this.lookupReference('input_result').setValue(data.result);
+        this.lookupReference('input_refreshint').setValue(data.refreshint);
     }
 });

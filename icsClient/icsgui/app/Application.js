@@ -7,14 +7,20 @@ Ext.define('ICSGui.Application', {
     extend: 'Ext.app.Application',
     name: 'ICSGui',
     requires:[
-      'Ext.layout.container.Border'
+        'Ext.layout.container.Border',
+        'Ext.state.LocalStorageProvider',
+        'Ext.form.Panel',
+        'Ext.form.field.*'
     ],
     stores: [
-
+        'ConfigStore'
     ],
 
     config: {
         socket: null
+    },
+    init:function(){
+        Ext.state.Manager.setProvider(new Ext.state.LocalStorageProvider());
     },
     
     launch: function (config) {
