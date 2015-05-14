@@ -1,2 +1,2 @@
-cd %CURRENT_DIR%\icsgui
+cd icsgui
 sencha ant testing build
