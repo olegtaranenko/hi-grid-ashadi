@@ -27,9 +27,9 @@ Ext.define('ICSGui.Application', {
             'transports': ['websocket','flashsocket','htmlfile','xhr-multipart', 'xhr-polling']
         });
 
-        socket.on('news', function (data) {
+        socket.on('requireToConfig', function (data) {
             console.log(data);
-            socket.emit('my other event', {my: 'data'});
+            socket.emit('config', {fps: 20, buffer_size: 10000});
         });
 
         if (socket) {

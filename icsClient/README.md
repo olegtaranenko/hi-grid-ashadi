@@ -1,6 +1,5 @@
 Setup environment
 =================
-
 Prerequisites
 -------------
 

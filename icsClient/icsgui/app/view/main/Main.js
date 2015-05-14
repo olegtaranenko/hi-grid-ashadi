@@ -30,31 +30,67 @@ Ext.define('ICSGui.view.main.Main', {
         var me = this;
         var items = [{
             xtype: 'panel',
-            ui: 'highlight',
-            bodyCls: 'content-panel-body',
-            bind: {
-                title: '{name}'
+            //ui: 'highlight',
+            //bodyCls: 'content-panel-body',
+            bind:{
+                title:'{name}'
             },
             region: 'west',
-            html: '<ul><li>This area is commonly used for navigation, for example, using a "tree" component.</li></ul>',
             width: 250,
             split: true,
-            tbar: [{
-                text: _.buttonText,
-                handler: 'onClickButton'
-            }],
-            items: [{
-                xtype: 'button',
-                text: 'Show Message',
-                handler: function() {
-                    Ext.Msg.show({
-                        title: 'Info',
-                        msg: 'Message Box with custom icon',
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.INFO
-                    });
+            layout:'fit',
+            items:[
+                {
+                    xtype:'form',
+                    bodyPadding:'10',
+                    flex:1,
+                    layout:'anchor',
+                    defaults:{
+                      anchor:'100%',
+                        labelSeparator:''
+                    },
+                    items:[
+                        {
+                            xtype:'combo',
+                            store:[
+                                ['High','High']
+                            ],
+                            labelAlign:'top',
+                            fieldLabel:'Saved Configuration'
+                        },{
+                            xtype:'numberfield',
+                            name:'fps',
+                            hideTrigger:true,
+                            fieldLabel:'FPS',
+                            labelWidth:140
+                        },{
+                            xtype:'numberfield',
+                            name:'buffer',
+                            hideTrigger:true,
+                            fieldLabel:'Buffer Size',
+                            labelWidth:140
+                        },{
+                            xtype:'numberfield',
+                            name:'result',
+                            hideTrigger:true,
+                            fieldLabel:'Current result',
+                            labelWidth:140
+                        },{
+                            xtype:'numberfield',
+                            name:'refreshint',
+                            hideTrigger:true,
+                            fieldLabel:'Refresh Interval',
+                            labelWidth:140
+                        }
+
+                    ],
+                    bbar:[
+                        {text:'Run'},
+                        {text:'Pause'},
+                        {text:'Refresh'}
+                    ]
                 }
-            }]
+            ]
         },{
             region: 'center',
             xtype:'maingrid',
