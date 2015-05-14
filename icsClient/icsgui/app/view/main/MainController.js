@@ -39,18 +39,31 @@ Ext.define('ICSGui.view.main.MainController', {
 
     onChangeConfig: function(combo, record){
         var data = record.data;
-        this.lookupReference('input_fps').setValue(data.fps);
+        this.lookupReference('input_fps').setValue(record.get('fps'));
         this.lookupReference('input_buffer').setValue(data.buffer);
-        this.lookupReference('input_result').setValue(data.result);
+        this.lookupReference('input_result').setValue(data.initialResults);
         this.lookupReference('input_refreshint').setValue(data.refreshint);
     },
 
+    gatherServerConfig: function() {
+        var fields = Ext.ComponentQuery.query('app-main numberfield'),
+            config = {};
+
+        Ext.each(fields, function(field) {
+            var ref = field.getReference();
+
+            config[ref] = field.getValue();
+        });
+
+        return config;
+    },
 
     onServerRun: function(ct) {
         console.log('onServerRun');
-        var socket = ICSGui.app.getSocket();
-//         socket.emit('configuration', {fps: 39});
-        socket.emit('start', {fps: 30});
+        var socket = ICSGui.app.getSocket(),
+            config = this.gatherServerConfig();
+
+        socket.emit('start', config);
     },
 
 

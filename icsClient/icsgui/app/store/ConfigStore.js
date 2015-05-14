@@ -4,10 +4,10 @@
 
 Ext.define('ICSGui.store.ConfigStore',{
     extend:'Ext.data.Store',
-    fields:['name','fps','buffer','result','refreshint'],
+    fields:['name','fps','buffer','initialResults','refreshint'],
     data:[
-        {name:'High', fps:30, buffer:40, result:50, refreshint: 60},
-        {name:'Medium', fps:20, buffer:30, result:40, refreshint: 50},
-        {name:'Low', fps:10, buffer:20, result:30, refreshint: 40}
+        {name:'High', fps:30, buffer:1000, initialResults:150, refreshint: 60},
+        {name:'Medium', fps:5, buffer:30000, initialResults:4000, refreshint: 50},
+        {name:'Low', fps:1, buffer:200, initialResults:500, refreshint: 40}
     ]
 });

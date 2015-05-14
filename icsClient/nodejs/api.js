@@ -57,9 +57,12 @@ var ioInspectionTimer = null;
 var ioConfig = {
     fps: 20,
     buffer_size: 10000,
-    inspectionIndex: 0
+    input_result: 0
 };
+
+var lastinspectionIndex = 0;
 // --- END io Variables
+
 
 // run node web-server
 server.listen(localPort);
@@ -91,6 +94,13 @@ io.on('connection', function (socket) {
         ioStopInspection(data);
     });
 
+    socket.on('reset', function (data) {
+        console.log('[SOCKET EVENT] reset : ', data);
+        lastinspectionIndex = 0;
+        ioStopInspection(data);
+
+    });
+
     socket.on('disconnect', function () {
         console.log('[SOCKET EVENT] disconnected!!! ');
         ioStopInspection();
@@ -104,19 +114,23 @@ function ioSetConfiguration (config) {
     if (!config) {
         return;
     }
-    _.merge
+
     if (config.fps) {
         ioConfig.fps = config.fps;
     }
     if (config.buffer_size) {
         ioConfig.buffer_size = config.buffer_size;
     }
+
+    if (lastinspectionIndex == 0) {
+        lastinspectionIndex = config.input_result;
+    }
 }
 
 
 function ioStartInspection (socket, config) {
     ioSetConfiguration(config);
-    var interval = parseInt(1000 / ioConfig.fps);
+    var interval = parseInt(1000 / ioConfig.input_fps);
     if (ioInspectionTimer) {
         ioStopInspection();
     }
@@ -124,7 +138,7 @@ function ioStartInspection (socket, config) {
     console.log('live data started!');
     ioInspectionTimer = setInterval(function () {
         socket.emit('inspection', {
-            inspectionIndex: ioConfig.inspectionIndex++,
+            inspectionIndex: ioConfig.input_result++,
             inspectionTimestamp: (new Date()).getTime()
         });
 
@@ -141,6 +155,7 @@ function ioStopInspection () {
 }
 
 
+/*
 function ioGetDummy(index) {
     var data = [];
 
@@ -156,6 +171,7 @@ function ioGetDummy(index) {
     }
     return data;
 }
+*/
 // --------  END SOCKET.io FUNCTIONS
 // ----------------------------------------------------------
 
@@ -182,53 +198,55 @@ function startsWith(s, start, ignoreCase) {
 
 function processResults(req, res, next) {
     var requestUrl, parsedUrl, query, params, page, start, limit, ts, inspectionList;
+
     requestUrl = req.url;
     parsedUrl = url.parse(requestUrl);
     query = parsedUrl.query;
     params = querystring.parse(query);
-    page = params.page;
-    start = params.start;
-    limit = params.limit;
-    ts = (new Date()).getTime() / 1000;
 
-    var inspectionList = nextDummy(100000, ts);
+    page = Number(params.page);
+    start = Number(params.start);
+    limit = Number(params.limit);
+    ts = (new Date()).getTime() / 1000;
 
     res.writeHead(200, {
         "Content-Type": "application/javascript"
     });
 
-    start = parseInt(start);
-    var resultData = [];
-    for (var i = 0; i < limit; i++) {
-        var inspectionIndex = (page - 1) * limit + i + start;
-        if(inspectionIndex < inspectionList.length){
-            resultData.push(inspectionList[inspectionIndex]);
+    if (!(isNaN(limit) || isNaN(start) || isNaN(limit))) {
+        var resultData = [],
+            subtractPage = (page - 1) * limit,
+            input_fps = ioConfig.input_fps,
+            intervalBetweenInspections = parseInt(1 / input_fps),
+            lastIndex = lastinspectionIndex || ioConfig.input_result,
+            lastTimestamp = (new Date()).getTime();
+
+        for (var i = 0; i < limit; i++) {
+            var inspectionIndex = lastIndex - i - subtractPage,
+                subtractTime = lastTimestamp - i * 1000;
+
+            if (inspectionIndex <= 0) {
+                break;
+            }
+
+            resultData.push(generateInspection(inspectionIndex, ts));
         }
     }
 
+
     res.write(JSON.stringify({
         data: resultData,
-        total: inspectionList.length
+        total: ioConfig.input_result
     }));
 
     res.end();
 
-
-    function nextDummy(index, ts) {
-
-        var data = [];
-
-        for(var i=0; i < index ; i++){
-            var dummyTpl = {
-                inspectionIndex: i,
-                inspectionTime: i,
-                iterationDuration: i,
-                inspectionDuration: i,
-                isOk: false
-            };
-            data.push(dummyTpl);
-        }
-        return data;
+    function generateInspection(index, ts) {
+        return {
+            inspectionIndex: index,
+            inspectionTime: ts,
+            isOk: false
+        };
     }
 }
 
