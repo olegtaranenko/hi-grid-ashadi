@@ -7,7 +7,7 @@ Ext.define('ICSGui.view.main.MainModel', {
     alias: 'viewmodel.main',
 
     data: {
-        name: 'ICSGui'
+        name: 'Server Panel'
     }
 
     //TODO - add data, formulas and/or methods to support your view
