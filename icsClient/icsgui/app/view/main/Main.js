@@ -36,25 +36,8 @@ Ext.define('ICSGui.view.main.Main', {
                 title: '{name}'
             },
             region: 'west',
-            html: '<ul><li>This area is commonly used for navigation, for example, using a "tree" component.</li></ul>',
             width: 250,
-            split: true,
-            tbar: [{
-                text: _.buttonText,
-                handler: 'onClickButton'
-            }],
-            items: [{
-                xtype: 'button',
-                text: 'Show Message',
-                handler: function() {
-                    Ext.Msg.show({
-                        title: 'Info',
-                        msg: 'Message Box with custom icon',
-                        buttons: Ext.MessageBox.OK,
-                        icon: Ext.MessageBox.INFO
-                    });
-                }
-            }]
+            split: true
         },{
             region: 'center',
             xtype:'maingrid',
