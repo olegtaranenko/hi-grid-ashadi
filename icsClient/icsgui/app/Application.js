@@ -33,11 +33,6 @@ Ext.define('ICSGui.Application', {
             'transports': ['websocket','flashsocket','htmlfile','xhr-multipart', 'xhr-polling']
         });
 
-        socket.on('requireToConfig', function (data) {
-            console.log(data);
-            socket.emit('config', {fps: 20, buffer_size: 10000});
-        });
-
         if (socket) {
             me.setSocket(socket);
         } else {

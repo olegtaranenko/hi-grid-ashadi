@@ -5,7 +5,7 @@
 var express = require('express');
 var cors = require('cors');
 var debug = require('debug')('server');
-var path = require("path");
+var path = require('path');
 var join = path.join;
 var http = require('http');
 var url = require('url');
@@ -30,6 +30,7 @@ app.use(function(req, res, next) {
         length: contentLength,
         limit: '1mb'
     };
+
     if (contentType) {
         parseConfig.encoding = typer.parse(contentType).parameters.charset;
     }
@@ -44,7 +45,6 @@ app.use(function(req, res, next) {
 });
 
 app.use(logger);
-//app.use(invoke);
 
 app.use('/config', processConfig);
 app.use('/results', processResults);
@@ -55,12 +55,12 @@ var localPort = process.env.PORT || 5555;
 // --- io Variables
 var ioInspectionTimer = null;
 var ioConfig = {
-    fps: 20,
-    buffer_size: 10000,
-    input_result: 0
+//    fps: 20,
+//    buffer_size: 10000,
+//    input_result: 0
 };
 
-var lastinspectionIndex = 0;
+var lastInspectionIndex = 0;
 // --- END io Variables
 
 
@@ -96,7 +96,7 @@ io.on('connection', function (socket) {
 
     socket.on('reset', function (data) {
         console.log('[SOCKET EVENT] reset : ', data);
-        lastinspectionIndex = 0;
+        lastInspectionIndex = 0;
         ioStopInspection(data);
 
     });
@@ -105,6 +105,13 @@ io.on('connection', function (socket) {
         console.log('[SOCKET EVENT] disconnected!!! ');
         ioStopInspection();
     });
+
+    var serverConfiguration = _.clone(ioConfig);
+
+    if (lastInspectionIndex > 0) {
+        serverConfiguration.lastInspectionIndex = lastInspectionIndex;
+    }
+    socket.emit('serverConfiguration', serverConfiguration);
 });
 
 // ----------------------------------------------------------
@@ -115,22 +122,24 @@ function ioSetConfiguration (config) {
         return;
     }
 
-    if (config.fps) {
-        ioConfig.fps = config.fps;
-    }
-    if (config.buffer_size) {
-        ioConfig.buffer_size = config.buffer_size;
+    if (config.input_fps) {
+        ioConfig.fps = config.input_fps;
     }
 
-    if (lastinspectionIndex == 0) {
-        lastinspectionIndex = config.input_result;
+    if (config.input_buffer) {
+        ioConfig.buffer_size = config.input_buffer;
+    }
+
+    if (lastInspectionIndex == 0) {
+        lastInspectionIndex = config.input_result;
+        console.log('lastinspectionIndex = ', lastInspectionIndex);
     }
 }
 
 
 function ioStartInspection (socket, config) {
     ioSetConfiguration(config);
-    var interval = parseInt(1000 / ioConfig.input_fps);
+    var interval = parseInt(1000 / ioConfig.fps);
     if (ioInspectionTimer) {
         ioStopInspection();
     }
@@ -138,7 +147,7 @@ function ioStartInspection (socket, config) {
     console.log('live data started!');
     ioInspectionTimer = setInterval(function () {
         socket.emit('inspection', {
-            inspectionIndex: ioConfig.input_result++,
+            inspectionIndex: lastInspectionIndex++,
             inspectionTimestamp: (new Date()).getTime()
         });
 
@@ -154,24 +163,6 @@ function ioStopInspection () {
     }
 }
 
-
-/*
-function ioGetDummy(index) {
-    var data = [];
-
-    for(var i=0; i < index ; i++){
-        var dummyTpl = {
-            inspectionIndex: i,
-            inspectionTime: i,
-            iterationDuration: i,
-            inspectionDuration: i,
-            isOk: false
-        };
-        data.push(dummyTpl);
-    }
-    return data;
-}
-*/
 // --------  END SOCKET.io FUNCTIONS
 // ----------------------------------------------------------
 
@@ -216,10 +207,13 @@ function processResults(req, res, next) {
     if (!(isNaN(limit) || isNaN(start) || isNaN(limit))) {
         var resultData = [],
             subtractPage = (page - 1) * limit,
-            input_fps = ioConfig.input_fps,
-            intervalBetweenInspections = parseInt(1 / input_fps),
-            lastIndex = lastinspectionIndex || ioConfig.input_result,
+            input_fps = ioConfig.fps,
+            intervalBetweenInspections = parseInt(1000 / input_fps),
+            lastIndex = lastInspectionIndex || ioConfig.input_result,
             lastTimestamp = (new Date()).getTime();
+
+        console.log('ioConfig: ', ioConfig);
+        console.log('lastInspectionIndex = ', lastInspectionIndex);
 
         for (var i = 0; i < limit; i++) {
             var inspectionIndex = lastIndex - i - subtractPage,
@@ -236,7 +230,7 @@ function processResults(req, res, next) {
 
     res.write(JSON.stringify({
         data: resultData,
-        total: ioConfig.input_result
+        total: lastInspectionIndex
     }));
 
     res.end();

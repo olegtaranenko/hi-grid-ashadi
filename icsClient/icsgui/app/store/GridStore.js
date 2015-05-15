@@ -1,14 +1,18 @@
 Ext.define('ICSGui.store.GridStore',{
     extend:'Ext.data.BufferedStore',
-    fields:['inspectionIndex','inspectionTime','iterationDuration','inspectionDuration'],
+    requires: [
+        'ICSGui.model.InspectionModel'
+    ],
+
+    model: 'ICSGui.model.InspectionModel',
     remoteGroup: true,
-//    leadingBufferZone: 300,
     pageSize: 20,
     autoLoad:false,
+    remoteSort: true,
+    remoteFilter: true,
     proxy:{
         url:'http://localhost:5555/results',
         type:'ajax',
-//        simpleSortMode: true,
         reader:{
             type:'json',
             rootProperty:'data',
