@@ -28,7 +28,7 @@ ln -ns ~/Downloads/ext-5.1.1.365 ~/dev/hi-grid/ExtJS
 cd ~/dev/hi-grid/src/hi-grid/icsClient
 ./genWorkspace.sh
 ./gen.sh mv
-ln -ns ~ /dev/hi-grid/src/hi-grid/icsClient ~/Sites/hi-grid
+ln -ns ~/dev/hi-grid/src/hi-grid/icsClient ~/Sites/hi-grid
 
 
 
@@ -38,11 +38,11 @@ Init (windows) (not tested, may happens quirks)
 mkdir %YOUR-PROJECTS%\hi-grid\src
 cd %YOUR-PROJECTS%\hi-grid\src
 git clone git@gitlab.com:olegtaranenko/hi-grid.git hi-grid
-mklink /J  %YOUR-PROJECTS%\hi-grid\ExtJS %EXTJS_UNZIPPED_PATH%
+mklink /J %YOUR-PROJECTS%\hi-grid\ExtJS %EXTJS_UNZIPPED_PATH%
 cd %YOUR-PROJECTS%\hi-grid\src\hi-gird\icsClient
 genWorkspace.bat
 gen.bat mv
-mklink /J  %HTDOCS_PATH%\hi-grid %YOUR-PROJECTS%\hi-grid\src\icsClient
+mklink /J %HTDOCS_PATH%\hi-grid %YOUR-PROJECTS%\hi-grid\src\icsClient
 
 
 Run
