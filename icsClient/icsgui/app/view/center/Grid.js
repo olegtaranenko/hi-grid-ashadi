@@ -31,33 +31,4 @@ Ext.define('ICSGui.view.center.Grid', {
         return Ext.create('ICSGui.store.GridStore');
     }
 
-/*
-    createStore: function() {
-        var store = Ext.create('Ext.data.BufferedStore', {
-            fields: ['inspectionIndex', 'inspectionTime'],
-            remoteFilter: true,
-            remoteSort: true,
-            remoteGroup: true,
-            leadingBufferZone: 30,
-            pageSize: 20,
-            autoLoad: false,
-//            sorters: [{
-//                property:'inspectionIndex',
-//                direction:'DESC'
-//            }],
-            proxy: {
-                url: 'http://localhost:5555/results',
-                type: 'ajax',
-                //simpleSortMode: true,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'data',
-                    totalProperty: 'total'
-                }
-            }
-        });
-
-        return store;
-    }
-*/
 });

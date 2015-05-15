@@ -4,6 +4,10 @@ Ext.define('ICSGui.store.GridStore',{
         'ICSGui.model.InspectionModel'
     ],
 
+    config: {
+        dirty: false
+    },
+
     model: 'ICSGui.model.InspectionModel',
     remoteGroup: true,
     pageSize: 20,

@@ -7,14 +7,11 @@
 Ext.define('ICSGui.controller.SocketController', {
     extend: 'Ext.app.Controller',
 
-    config: {
-
-    },
-
     onLaunch: function() {
         var me = this,
-            socket = this.application.getSocket(),
-            lastInspectionCt = this.lastInspectionCt();
+            socket = me.application.getSocket(),
+            lastInspectionCt = me.lastInspectionCt(),
+            store = me.getGridStore();
 
         socket.on('serverConfiguration', function (data) {
             var emptyData = Ext.Object.isEmpty(data);
@@ -36,6 +33,7 @@ Ext.define('ICSGui.controller.SocketController', {
                 var inspectionIndex = data.inspectionIndex;
 
                 lastInspectionCt.setValue(inspectionIndex);
+                store.setDirty(true);
             }
         })
     },
@@ -58,5 +56,14 @@ Ext.define('ICSGui.controller.SocketController', {
 
     lastInspectionCt: function() {
         return Ext.ComponentQuery.query('maingrid [name=lastInspection]')[0];
+    },
+
+
+    getGridStore: function() {
+        var view = Ext.ComponentQuery.query('maingrid')[0];
+
+        if (view) {
+            return view.getStore();
+        }
     }
 });
