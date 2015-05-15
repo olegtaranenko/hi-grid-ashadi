@@ -1,5 +1,5 @@
 Ext.define('ICSGui.store.GridStore',{
-    extend:'Ext.data.BufferedStore',
+    extend:'Ext.data.Store',
     requires: [
         'ICSGui.model.InspectionModel'
     ],
@@ -9,6 +9,10 @@ Ext.define('ICSGui.store.GridStore',{
     },
 
     model: 'ICSGui.model.InspectionModel',
+    sorters: [{
+        property: 'inspectionIndex',
+        direction: 'DESC'
+    }],
     remoteGroup: true,
     pageSize: 20,
     autoLoad:false,

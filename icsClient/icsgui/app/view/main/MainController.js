@@ -11,11 +11,18 @@ Ext.define('ICSGui.view.main.MainController', {
     ],
 
     config: {
-        lastInspectionIndex: 0
+        lastInspectionIndex: 0,
+        delayRefresh: 1000,
+        currentPageGrid: 0
     },
 
     alias: 'controller.main',
 
+    init: function() {
+        var me = this;
+
+        me.deferredLoad = Ext.create('Ext.util.DelayedTask', me.refreshStore, me);
+    },
 
     onChangeConfig: function(combo, record){
         var data = record.data;
@@ -32,13 +39,24 @@ Ext.define('ICSGui.view.main.MainController', {
         return socketController.gatherServerConfig();
     },
 
+    refreshStore: function() {
+        var me = this,
+            store = me.lookupReference('maingrid').getStore();
+
+        me.setCurrentPageGrid(me.getCurrentPageGrid() + 1);
+        store.setPageSize(me.getCurrentPageGrid() * 20);
+        store.load();
+        me.deferredLoad.delay(me.getDelayRefresh());
+    },
 
     onServerRun: function(ct) {
         console.log('onServerRun');
-        var socket = ICSGui.app.getSocket(),
-            config = this.gatherServerConfig();
+        var me = this,
+            socket = ICSGui.app.getSocket(),
+            config = me.gatherServerConfig();
 
         socket.emit('start', config);
+        me.deferredLoad.delay(0);
     },
 
 
@@ -46,6 +64,7 @@ Ext.define('ICSGui.view.main.MainController', {
         console.log('onServerStop');
         var socket = ICSGui.app.getSocket();
         socket.emit('stop');
+        this.deferredLoad.cancel();
     },
 
 
