@@ -119,8 +119,7 @@ Ext.define('ICSGui.view.main.Main', {
         }, {
             region: 'center',
             xtype: 'maingrid',
-            title: 'Center Grid',
-            reference: 'maingrid'
+            title: 'Center Grid'
         }];
 
         me.items = items;

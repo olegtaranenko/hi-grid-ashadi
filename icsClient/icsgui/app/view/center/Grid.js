@@ -18,6 +18,7 @@ Ext.define('ICSGui.view.center.Grid', {
             ]
         });
 
+        me.store.loadPage(1);
         me.callParent(arguments);
     },
 
