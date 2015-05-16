@@ -9,7 +9,7 @@ Ext.define('ICSGui.model.InspectionModel', {
     config: {
         fields: [
             {name: 'inspectionIndex', type: 'int'},
-            {name: 'inspectionTimestamp', type: 'date'}
+            {name: 'inspectionTime', type: 'date'}
         ],
         idProperty: 'inspectionIndex'
     }

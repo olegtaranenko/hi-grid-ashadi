@@ -17,11 +17,10 @@ Ext.define('ICSGui.view.center.Grid', {
             store: me.createStore(),
             columns: [
                 {dataIndex: 'inspectionIndex', text: 'Inspection', flex: 1, sortable: false},
-                {dataIndex: 'inspectionTimestamp', text: 'Time', flex: 1, sortable: false}
+                {dataIndex: 'inspectionTime', text: 'Time', flex: 1, sortable: false}
             ]
         });
 
-        me.store.loadPage(1);
         me.callParent(arguments);
     },
 

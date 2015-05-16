@@ -15,9 +15,9 @@ Ext.define('ICSGui.store.GridStore', {
 
     remoteGroup: true,
     pageSize: 20,
-    viewSize: 41,
-//    defaultViewSize: 41,
-    autoLoad: false,
+    viewSize: 30,
+    //defaultViewSize: 30,
+    autoLoad: true,
     remoteSort: true,
     remoteFilter: true,
     proxy: {
