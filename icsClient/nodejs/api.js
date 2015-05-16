@@ -212,8 +212,8 @@ function processResults(req, res, next) {
             lastIndex = lastInspectionIndex || ioConfig.input_result,
             lastTimestamp = (new Date()).getTime();
 
-        console.log('ioConfig: ', ioConfig);
-        console.log('lastInspectionIndex = ', lastInspectionIndex);
+//        console.log('ioConfig: ', ioConfig);
+//        console.log('lastInspectionIndex = ', lastInspectionIndex);
 
         for (var i = 0; i < limit; i++) {
             var inspectionIndex = lastIndex - i - subtractPage,

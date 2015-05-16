@@ -9,6 +9,7 @@ Ext.define('ICSGui.Application', {
     requires:[
         'Ext.layout.container.Border',
         'Ext.state.LocalStorageProvider',
+        'ICSGui.plugin.HiGridRenderer',
         'Ext.form.Panel',
         'Ext.form.field.*'
     ],

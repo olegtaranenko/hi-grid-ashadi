@@ -7,6 +7,9 @@ Ext.define('ICSGui.view.center.Grid', {
 
     xtype: 'maingrid',
 
+    bufferedRenderer: Ext.create('ICSGui.plugin.HiGridRenderer', {
+
+    }),
 
     initComponent: function() {
         var me = this;
@@ -29,6 +32,12 @@ Ext.define('ICSGui.view.center.Grid', {
 
     createStore: function() {
         return Ext.create('ICSGui.store.GridStore');
+    },
+
+
+    beforeRender: function() {
+        var me = this;
+        me.addPlugin(me.bufferedRenderer);
     }
 
 });
