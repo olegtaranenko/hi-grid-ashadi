@@ -9,10 +9,14 @@ Ext.define('ICSGui.store.GridStore', {
     },
 
     model: 'ICSGui.model.InspectionModel',
+    trailingBufferZone: 0,
+    leadingBufferZone: 0,
+    numFromEdge: 0,
+
     remoteGroup: true,
     pageSize: 20,
     viewSize: 41,
-    defaultViewSize: 41,
+//    defaultViewSize: 41,
     autoLoad: false,
     remoteSort: true,
     remoteFilter: true,
