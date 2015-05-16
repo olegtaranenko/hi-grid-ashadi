@@ -8,6 +8,7 @@ Ext.define('ICSGui.Application', {
     name: 'ICSGui',
     requires:[
         'Ext.layout.container.Border',
+        'Ext.data.proxy.LocalStorage',
         'Ext.state.LocalStorageProvider',
         'ICSGui.plugin.HiGridRenderer',
         'Ext.form.Panel',

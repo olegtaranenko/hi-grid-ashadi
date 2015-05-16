@@ -30,6 +30,14 @@ Ext.define('ICSGui.view.main.Main', {
 
     initComponent: function() {
         var me = this;
+
+        var combo_store = Ext.getStore('ConfigStore');
+        combo_store.reload();
+        if(!combo_store.data.length){
+            combo_store.loadData(combo_store.configData,false);
+            combo_store.sync();
+        }
+
         var items = [{
             xtype: 'panel',
             //ui: 'highlight',
@@ -53,11 +61,13 @@ Ext.define('ICSGui.view.main.Main', {
                 items: [{
                     xtype: 'combo',
                     name: 'name',
-                    store: 'ConfigStore',
+                    reference:'cconfig',
+                    store: combo_store,
                     valueField: 'name',
                     displayField: 'name',
                     stateful: true,
                     stateId: 'cofig_name',
+                    queryMode:'local',
                     labelAlign: 'top',
                     fieldLabel: 'Saved Configuration',
                     forceSelection: true,
@@ -72,7 +82,11 @@ Ext.define('ICSGui.view.main.Main', {
                     stateId: 'input_fps',
                     hideTrigger: true,
                     fieldLabel: 'FPS',
-                    labelWidth: 140
+                    labelWidth: 140,
+                    enableKeyEvents:true,
+                    listeners:{
+                        keyup:'onChangeFieldConfig'
+                    }
                 }, {
                     xtype: 'numberfield',
                     name: 'buffer',
@@ -81,7 +95,11 @@ Ext.define('ICSGui.view.main.Main', {
                     stateId: 'input_buffer',
                     hideTrigger: true,
                     fieldLabel: 'Buffer Size',
-                    labelWidth: 140
+                    labelWidth: 140,
+                    enableKeyEvents:true,
+                    listeners:{
+                        keyup:'onChangeFieldConfig'
+                    }
                 }, {
                     xtype: 'numberfield',
                     name: 'initialResults',
@@ -90,7 +108,11 @@ Ext.define('ICSGui.view.main.Main', {
                     stateId: 'input_result',
                     hideTrigger: true,
                     fieldLabel: 'Initial Results',
-                    labelWidth: 140
+                    labelWidth: 140,
+                    enableKeyEvents:true,
+                    listeners:{
+                        keyup:'onChangeFieldConfig'
+                    }
                 }, {
                     xtype: 'numberfield',
                     name: 'refreshint',
@@ -99,7 +121,11 @@ Ext.define('ICSGui.view.main.Main', {
                     stateId: 'input_refreshint',
                     hideTrigger: true,
                     fieldLabel: 'Refresh Interval',
-                    labelWidth: 140
+                    labelWidth: 140,
+                    enableKeyEvents:true,
+                    listeners:{
+                        keyup:'onChangeFieldConfig'
+                    }
                 }],
                 bbar: [
                     {

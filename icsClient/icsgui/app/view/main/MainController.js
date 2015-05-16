@@ -25,6 +25,20 @@ Ext.define('ICSGui.view.main.MainController', {
         this.lookupReference('input_refreshint').setValue(data.refreshint);
     },
 
+    onChangeFieldConfig:function(field){
+        var val = field.getValue();
+        if(val != null){
+            var store = Ext.getStore('ConfigStore');
+            var name = this.lookupReference('cconfig').getValue();
+            var rec = store.findRecord('name',name);
+            if(rec){
+                rec.set(field.name, val);
+                rec.commit();
+                rec.save();
+            }
+        }
+    },
+
 
     gatherServerConfig: function() {
         var socketController = ICSGui.app.getController('ICSGui.controller.SocketController');
