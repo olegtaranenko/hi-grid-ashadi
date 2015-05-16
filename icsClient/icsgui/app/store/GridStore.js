@@ -1,10 +1,14 @@
 Ext.define('ICSGui.store.GridStore', {
     extend: 'Ext.data.BufferedStore',
     requires: [
-        'ICSGui.model.InspectionModel'
+        'ICSGui.model.InspectionModel',
+        'ICSGui.proxy.InspectionProxy'
     ],
 
     config: {
+        model: 'ICSGui.model.InspectionModel',
+
+        proxy: 'inspection',
         // overridden from Buffered store
         trailingBufferZone: 0,
         leadingBufferZone: 0,
@@ -13,11 +17,11 @@ Ext.define('ICSGui.store.GridStore', {
         purgePageCount: 1,
 
         // my business var
-        dirty: false
+        dirty: false,
+        socket: null
 
     },
 
-    model: 'ICSGui.model.InspectionModel',
 
     remoteGroup: true,
     pageSize: 20,
@@ -26,13 +30,15 @@ Ext.define('ICSGui.store.GridStore', {
     autoLoad: true,
     remoteSort: true,
     remoteFilter: true,
-    proxy: {
-        url: 'http://localhost:5555/results',
-        type: 'ajax',
-        reader: {
-            type: 'json',
-            rootProperty: 'data',
-            totalProperty: 'total'
+
+    updateDirty: function(dirty, old) {
+        if (dirty) {
         }
+    },
+
+    updateSocket: function(socket) {
+        var throttledUpdate = Ext.Function.createThrottled(function() {
+
+        }, 500)
     }
 });

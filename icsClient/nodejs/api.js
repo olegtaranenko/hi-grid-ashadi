@@ -198,7 +198,7 @@ function processResults(req, res, next) {
     page = Number(params.page);
     start = Number(params.start);
     limit = Number(params.limit);
-    ts = (new Date()).getTime() / 1000;
+    ts = (new Date()).getTime();
 
     res.writeHead(200, {
         "Content-Type": "application/javascript"
@@ -217,13 +217,13 @@ function processResults(req, res, next) {
 
         for (var i = 0; i < limit; i++) {
             var inspectionIndex = lastIndex - i - subtractPage,
-                subtractTime = lastTimestamp - i * 1000;
+                subtractTime = intervalBetweenInspections * inspectionIndex;
 
             if (inspectionIndex <= 0) {
                 break;
             }
 
-            resultData.push(generateInspection(inspectionIndex, ts));
+            resultData.push(generateInspection(inspectionIndex, ts + subtractTime));
         }
     }
 

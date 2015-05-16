@@ -6,11 +6,18 @@
  */
 Ext.define('ICSGui.model.InspectionModel', {
     extend: 'Ext.data.Model',
+
+    alias: 'model.inspection',
+//    requires: [
+//        'ICSGui.proxy.InspectionProxy'
+//    ],
+
     config: {
         fields: [
             {name: 'inspectionIndex', type: 'int'},
             {name: 'inspectionTime', type: 'int'}
         ],
         idProperty: 'inspectionIndex'
+//        proxy: 'inspection'
     }
 });
