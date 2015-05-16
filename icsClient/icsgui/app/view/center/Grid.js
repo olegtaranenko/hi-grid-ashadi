@@ -11,6 +11,10 @@ Ext.define('ICSGui.view.center.Grid', {
 
     }),
 
+    viewConfig: {
+        loadMask: false
+    },
+
     initComponent: function() {
         var me = this;
         function msToTime(duration) {

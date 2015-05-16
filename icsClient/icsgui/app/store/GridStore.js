@@ -5,17 +5,23 @@ Ext.define('ICSGui.store.GridStore', {
     ],
 
     config: {
+        // overridden from Buffered store
+        trailingBufferZone: 0,
+        leadingBufferZone: 0,
+        numFromEdge: 5,
+
+        purgePageCount: 1,
+
+        // my business var
         dirty: false
+
     },
 
     model: 'ICSGui.model.InspectionModel',
-    trailingBufferZone: 0,
-    leadingBufferZone: 0,
-    numFromEdge: 0,
 
     remoteGroup: true,
     pageSize: 20,
-    viewSize: 30,
+    viewSize: 25,
     //defaultViewSize: 30,
     autoLoad: true,
     remoteSort: true,
