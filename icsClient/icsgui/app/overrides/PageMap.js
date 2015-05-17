@@ -12,15 +12,25 @@ Ext.define('ICSGui.overrides.PageMap', {
     },
 
     appendRecordsToTop: function(records) {
-        var map = this.map,
-            top = map && map[1];
+        var me = this,
+            map = me.map,
+            top = map && map[1],
+            fixMapIndex = false;
 
         if (top) {
             var cachedRecs = top.value;
             for (var index = records.length - 1; index >= 0; index--) {
                 var addedRecord = records[index];
+
                 cachedRecs.unshift(addedRecord);
+                fixMapIndex = true;
             }
+        } else {
+            me.addPage(1, records);
+        }
+
+        if (fixMapIndex) {
+
         }
     },
 
@@ -100,10 +110,11 @@ Ext.define('ICSGui.overrides.PageMap', {
     getRange: function(start, end) {
         // Store's backing Collection now uses EXCLUSIVE endIndex
         // So store will always pass the endIndex+1
+        console.log('start: %s, end: %s', start, end)
         end--;
 
         if (!this.hasRange(start, end)) {
-            Ext.Error.raise('PageMap asked for range which it does not have');
+           Ext.Error.raise('PageMap asked for range which it does not have');
         }
         var me = this,
             pageSize = me.getPageSize(),
@@ -127,7 +138,7 @@ Ext.define('ICSGui.overrides.PageMap', {
                 doSlice = false;
             }
             if (pageNumber === endPageNumber) {
-                sliceEnd = pageSize - (dataEnd - end);
+                sliceEnd = me.getPageSize(pageNumber) - (dataEnd - end);
                 doSlice = true;
             }
 
@@ -138,10 +149,13 @@ Ext.define('ICSGui.overrides.PageMap', {
                 Ext.Array.push(result, me.getPage(pageNumber));
             }
         }
+        if (start != end) {
+            console.log('startPage: %s, endPage: %s, result: ', startPageNumber, endPageNumber, result);
+        }
         return result;
     },
 
-    getPagSize: function(pageNumber) {
+    getPageSize: function(pageNumber) {
         if (pageNumber != 1) {
             return this.callParent();
         }

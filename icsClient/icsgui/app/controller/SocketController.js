@@ -11,8 +11,11 @@ Ext.define('ICSGui.controller.SocketController', {
         var me = this,
             socket = me.application.getSocket(),
             lastInspectionCt = me.lastInspectionCt(),
+            intervalCt = Ext.ComponentQuery.query('app-main numberfield[name=refreshint]')[0],
+            interval = intervalCt.getValue(),
             store = me.getGridStore();
 
+        store.setThreshold(Number(interval));
         store.setSocket(socket);
 
         socket.on('serverConfiguration', function (data) {

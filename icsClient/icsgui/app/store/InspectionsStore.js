@@ -19,7 +19,8 @@ Ext.define('ICSGui.store.InspectionsStore', {
 
         // my business var
         dirty: false,
-        socket: null
+        socket: null,
+        threshold: 1000 // ms
 
     },
 
@@ -51,12 +52,21 @@ Ext.define('ICSGui.store.InspectionsStore', {
         }
     },
 
+    applyThreshold: function(value) {
+        if (!value) {
+            value = 1000;
+        }
+        return value;
+    },
+
     updateSocket: function(socket) {
-        var me = this;
+        var me = this,
+            threshold = me.getThreshold();
+
         this.throttledUpdate = Ext.Function.createThrottled(function() {
             console.log('throttled update');
             me.readTopPage();
-        }, 500);
+        }, threshold);
     },
 
     readTopPage: function() {
