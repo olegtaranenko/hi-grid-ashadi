@@ -1,8 +1,8 @@
-Ext.define('ICSGui.view.center.Grid', {
+Ext.define('ICSGui.view.center.InspectionsGrid', {
     extend: 'Ext.grid.Panel',
     requires: [
         'Ext.form.field.Text',
-        'ICSGui.store.GridStore'
+        'ICSGui.store.InspectionsStore'
     ],
 
     xtype: 'maingrid',
@@ -39,7 +39,7 @@ Ext.define('ICSGui.view.center.Grid', {
     ],
 
     createStore: function() {
-        return Ext.create('ICSGui.store.GridStore');
+        return Ext.create('ICSGui.store.InspectionsStore');
     },
 
 

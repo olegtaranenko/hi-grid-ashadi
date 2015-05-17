@@ -12,7 +12,7 @@ Ext.define('ICSGui.view.main.Main', {
         'ICSGui.global.Constants',
         'ICSGui.view.main.MainController',
         'ICSGui.view.main.MainModel',
-        'ICSGui.view.center.Grid'
+        'ICSGui.view.center.InspectionsGrid'
     ],
 
     xtype: 'app-main',

@@ -13,6 +13,8 @@ Ext.define('ICSGui.controller.SocketController', {
             lastInspectionCt = me.lastInspectionCt(),
             store = me.getGridStore();
 
+        store.setSocket(socket);
+
         socket.on('serverConfiguration', function (data) {
             var emptyData = Ext.Object.isEmpty(data);
 

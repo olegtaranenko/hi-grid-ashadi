@@ -188,38 +188,40 @@ function startsWith(s, start, ignoreCase) {
 
 
 function processResults(req, res, next) {
-    var requestUrl, parsedUrl, query, params, page, start, limit, ts, inspectionList;
+    var requestUrl = req.url;
+    var parsedUrl = url.parse(requestUrl);
+    var query = parsedUrl.query;
+    var params = querystring.parse(query);
 
-    requestUrl = req.url;
-    parsedUrl = url.parse(requestUrl);
-    query = parsedUrl.query;
-    params = querystring.parse(query);
-
-    page = Number(params.page);
-    start = Number(params.start);
-    limit = Number(params.limit);
-    ts = (new Date()).getTime();
+    var page = Number(params.page);
+    var start = Number(params.start);
+    var limit = Number(params.limit) || 0;
+    var lastClientIndex = params.lastClientIndex;
+    var ts = (new Date()).getTime();
 
     res.writeHead(200, {
         "Content-Type": "application/javascript"
     });
 
-    if (!(isNaN(limit) || isNaN(start) || isNaN(limit))) {
+    if (!(isNaN(start) || isNaN(page))) {
         var resultData = [],
             subtractPage = (page - 1) * limit,
             input_fps = ioConfig.fps,
             intervalBetweenInspections = parseInt(1000 / input_fps),
-            lastIndex = lastInspectionIndex || ioConfig.input_result,
-            lastTimestamp = (new Date()).getTime();
+            lastIndex = lastInspectionIndex || ioConfig.input_result;
 
-//        console.log('ioConfig: ', ioConfig);
-//        console.log('lastInspectionIndex = ', lastInspectionIndex);
+        if (limit == 0 && lastIndex > 0) {
+            limit = lastIndex - lastClientIndex;
+            if (limit <= 0) {
+                limit = 20;
+            }
+        }
 
         for (var i = 0; i < limit; i++) {
             var inspectionIndex = lastIndex - i - subtractPage,
                 subtractTime = intervalBetweenInspections * inspectionIndex;
 
-            if (inspectionIndex <= 0) {
+            if (inspectionIndex <= 0 || isNaN(inspectionIndex)) {
                 break;
             }
 
@@ -230,7 +232,7 @@ function processResults(req, res, next) {
 
     res.write(JSON.stringify({
         data: resultData,
-        total: lastInspectionIndex
+        total: lastIndex
     }));
 
     res.end();

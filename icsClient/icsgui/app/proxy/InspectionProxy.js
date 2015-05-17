@@ -15,5 +15,28 @@ Ext.define('ICSGui.proxy.InspectionProxy', {
             rootProperty: 'data',
             totalProperty: 'total'
         }
+    },
+
+/*
+    readTopPage: function(options) {
+        var me = this,
+            operation = me.createOperation('read', options);
+
+        me.read(operation);
+    },
+*/
+
+    createOperation: function(operation, options) {
+        var me = this,
+            ret = me.callParent(arguments);
+
+        return ret;
+    },
+
+    processResponse: function(success, operation, request, response) {
+        var me = this,
+            ret = me.callParent(arguments);
+
+        return ret;
     }
 });
