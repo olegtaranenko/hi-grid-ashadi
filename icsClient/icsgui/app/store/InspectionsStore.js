@@ -15,7 +15,7 @@ Ext.define('ICSGui.store.InspectionsStore', {
         leadingBufferZone: 0,
 //        numFromEdge: 2,
 
-        purgePageCount: 5,
+        purgePageCount: 2,
 
         // my business var
         dirty: false,
@@ -71,7 +71,11 @@ Ext.define('ICSGui.store.InspectionsStore', {
                 page: 1,
                 start: 0,
                 callback: function(records, operation, success) {
-                    debugger;
+                    var pageMap = me.getData();
+
+                    if (success) {
+                        pageMap.appendRecordsToTop(records);
+                    }
                 }
             },
             operation = me.createOperation('read', options);
