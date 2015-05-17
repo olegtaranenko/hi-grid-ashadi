@@ -137,8 +137,8 @@ Ext.define('ICSGui.view.main.Main', {
                         handler: 'onServerStop'
                     },
                     {
-                        text: 'Reset',
-                        handler: 'onServerReset'
+                        text: 'Push',
+                        handler: 'onServerPushOneRecord'
                     }
                 ]
             }]

@@ -94,10 +94,13 @@ io.on('connection', function (socket) {
         ioStopInspection(data);
     });
 
-    socket.on('reset', function (data) {
-        console.log('[SOCKET EVENT] reset : ', data);
-        lastInspectionIndex = 0;
-        ioStopInspection(data);
+    socket.on('push', function (data) {
+        console.log('[SOCKET EVENT] push : ', data);
+
+        socket.emit('inspection', {
+            inspectionIndex: ++lastInspectionIndex,
+            inspectionTimestamp: (new Date()).getTime()
+        });
 
     });
 
@@ -147,7 +150,7 @@ function ioStartInspection (socket, config) {
     console.log('live data started!');
     ioInspectionTimer = setInterval(function () {
         socket.emit('inspection', {
-            inspectionIndex: lastInspectionIndex++,
+            inspectionIndex: ++lastInspectionIndex,
             inspectionTimestamp: (new Date()).getTime()
         });
 

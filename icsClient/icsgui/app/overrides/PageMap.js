@@ -17,8 +17,8 @@ Ext.define('ICSGui.overrides.PageMap', {
 
         if (top) {
             var cachedRecs = top.value;
-            for (var index = cachedRecs.length - 1; index >= 0; index--) {
-                var addedRecord = cachedRecs[index];
+            for (var index = records.length - 1; index >= 0; index--) {
+                var addedRecord = records[index];
                 cachedRecs.unshift(addedRecord);
             }
         }
@@ -32,15 +32,15 @@ Ext.define('ICSGui.overrides.PageMap', {
     },
 
     getPageFromRecordIndex: function(index) {
-        var ret = this.callParent(arguments),
+        var ret = 0,
             topCached = this.isTopPageCached();
 
         if (!topCached) {
             ret = this.callParent(arguments);
         } else {
-            var correctedIndex = index - topCached;
-            if (correctedIndex > 0) {
-                ret = this.callParent([correctedIndex]) + 1;
+            var correctedIndex = index - topCached + 1;
+            if (correctedIndex >= 0) {
+                ret = this.callParent([correctedIndex]);
             } else {
                 ret = this.callParent(arguments);
             }
@@ -98,7 +98,53 @@ Ext.define('ICSGui.overrides.PageMap', {
     },
 
     getRange: function(start, end) {
-//         console.log('overriden getRange', arguments);
-        return this.callParent(arguments);
+        // Store's backing Collection now uses EXCLUSIVE endIndex
+        // So store will always pass the endIndex+1
+        end--;
+
+        if (!this.hasRange(start, end)) {
+            Ext.Error.raise('PageMap asked for range which it does not have');
+        }
+        var me = this,
+            pageSize = me.getPageSize(),
+            startPageNumber = me.getPageFromRecordIndex(start),
+            endPageNumber = me.getPageFromRecordIndex(end),
+            topPageSize = startPageNumber === 1 ? me.map[1].value.length : 0,
+            dataStart = (startPageNumber > 1) ? (startPageNumber - 1) * pageSize : 0,
+            dataEnd = (endPageNumber > 1) ? endPageNumber * pageSize - 1 : topPageSize - 1,
+            pageNumber = startPageNumber,
+            result = [],
+            sliceBegin, sliceEnd, doSlice;
+
+        for (; pageNumber <= endPageNumber; pageNumber++) {
+
+            // First and last pages will need slicing to cut into the actual wanted records
+            if (pageNumber === startPageNumber) {
+                sliceBegin = start - dataStart;
+                doSlice = true;
+            } else {
+                sliceBegin = 0;
+                doSlice = false;
+            }
+            if (pageNumber === endPageNumber) {
+                sliceEnd = pageSize - (dataEnd - end);
+                doSlice = true;
+            }
+
+            // First and last pages will need slicing
+            if (doSlice) {
+                Ext.Array.push(result, Ext.Array.slice(me.getPage(pageNumber), sliceBegin, sliceEnd));
+            } else {
+                Ext.Array.push(result, me.getPage(pageNumber));
+            }
+        }
+        return result;
+    },
+
+    getPagSize: function(pageNumber) {
+        if (pageNumber != 1) {
+            return this.callParent();
+        }
+        return this.map[1].value.length;
     }
 });

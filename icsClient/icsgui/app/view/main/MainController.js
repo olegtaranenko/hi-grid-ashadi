@@ -63,11 +63,13 @@ Ext.define('ICSGui.view.main.MainController', {
     },
 
 
-    onServerReset: function(ct) {
-        console.log('onServerReset');
+    onServerPushOneRecord: function(ct) {
+        console.log('onServerPushOneRecord');
         var socket = ICSGui.app.getSocket(),
-            config = this.gatherServerConfig();
+            config = {
+                needToBePushed: 1
+            };
 
-        socket.emit('reset', config);
+        socket.emit('push', config);
     }
 });

@@ -75,6 +75,10 @@ Ext.define('ICSGui.store.InspectionsStore', {
 
                     if (success) {
                         pageMap.appendRecordsToTop(records);
+                        me.totalCount += records.length;
+                        me.fireEvent('totalcountchange', me.totalCount);
+                        me.fireEvent('datachanged', me);
+                        me.fireEvent('refresh', me);
                     }
                 }
             },
