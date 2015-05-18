@@ -12,7 +12,7 @@ Ext.define('ICSGui.store.InspectionsStore', {
         proxy: 'inspection',
         // overridden from Buffered store
         trailingBufferZone: 0,
-        leadingBufferZone: 0,
+        leadingBufferZone: 10,
 //        numFromEdge: 2,
 
         purgePageCount: 2,

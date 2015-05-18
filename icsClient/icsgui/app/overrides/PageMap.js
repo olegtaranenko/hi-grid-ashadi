@@ -110,7 +110,7 @@ Ext.define('ICSGui.overrides.PageMap', {
     getRange: function(start, end) {
         // Store's backing Collection now uses EXCLUSIVE endIndex
         // So store will always pass the endIndex+1
-        console.log('start: %s, end: %s', start, end)
+//        console.log('start: %s, end: %s', start, end)
         end--;
 
         if (!this.hasRange(start, end)) {

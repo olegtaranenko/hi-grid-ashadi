@@ -8,7 +8,7 @@ Ext.define('ICSGui.plugin.HiGridRenderer', {
     extend: 'Ext.grid.plugin.BufferedRenderer',
 
     trailingBufferZone: 0,
-    leadingBufferZone: 0,
+    leadingBufferZone: 10,
 //    numFromEdge: 2,
     variableRowHeight: false,
     rowHeight: 25,
